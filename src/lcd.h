@@ -30,12 +30,6 @@ void initLcd();
  */
 void lcdOutput();
 
-/**
- * Outputs the given number on display
- */
-void lcdPrintNum(int val);
-
-
 #define LCD_ROOF 0
 #define LCD_BUF_TOP 1
 #define LCD_BUF_MID 2

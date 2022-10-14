@@ -11,6 +11,9 @@
 // I2C Communication (LCD or data)
 #include <Wire.h>
 
+// Watchdog timer
+#include <avr/wdt.h>
+
 // State logic
 #include "state.h"
 

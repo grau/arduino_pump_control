@@ -21,17 +21,26 @@ void serialOutput() {
 }
 
 void setup() {
+  wdt_reset();
+  // wdt_enable is broken --> @see https://forum.arduino.cc/t/arduino-nano-wdt-problem/492906
+  WDTCSR = (1 << WDCE) | (1 << WDE);
+  WDTCSR = (1 << WDIE) | (1 << WDE) | (1 << WDP3) | (1 << WDP0);
+
   Serial.begin(115200);
 
   initInputOutput();
   initLcd();
+
+  // Can't use LCD and I2C together
   // initI2c();
 }
 
 void loop() {
+  wdt_reset();
   readSensors();
   applyLogic();
   serialOutput();
   lcdOutput();
+  wdt_reset();
   delay(1000);
 }

@@ -90,6 +90,7 @@ int getTempKty81_220(int r) {
 }
 
 void readSensors() {
+  digitalWrite(BUILTIN_LED, HIGH);
   calibrate();
   for (int i = 0; i < 23; i++) {
     switch (SENSOR_TYPES[i]) {
@@ -114,6 +115,7 @@ void readSensors() {
     }
     delay(10);
   }
+  digitalWrite(BUILTIN_LED, LOW);
 }
 
 void calibrate() {

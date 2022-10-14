@@ -1,23 +1,30 @@
 #include "main.h"
 
+bool bootFlag = true;
+
 void serialOutput() {
-  Serial.print("INPUT --> ");
-  for (int i = 0; i < 5; i++) {
-    Serial.print("ID: ");
-    Serial.print(i);
-    Serial.print(". Value: ");
-    Serial.print(sensorVals[i]);
-    Serial.print(" || \t");
-  }
-  Serial.print("\nOUTPUT --> ");
+  Serial.print("{state:");
+  Serial.print(systemState);
+  Serial.print(",boot:");
+  Serial.print(bootFlag ? "true" : "false");
+  Serial.print(",input:[");
   for (int i = 0; i < 4; i++) {
-    Serial.print("ID: ");
+    Serial.print("{id:");
     Serial.print(i);
-    Serial.print(". Value: ");
-    Serial.print(outputStates[i]);
-    Serial.print(" || \t");
+    Serial.print(",val:");
+    Serial.print(sensorVals[i]);
+    Serial.print("},");
   }
-  Serial.println("");
+  Serial.print("],output: [");
+  for (int i = 0; i < 2; i++) {
+    Serial.print("{id:");
+    Serial.print(i);
+    Serial.print(",val:");
+    Serial.print(outputStates[i]);
+    Serial.print("},");
+  }
+  Serial.println("]}");
+  bootFlag = false;
 }
 
 void setup() {
@@ -26,6 +33,7 @@ void setup() {
   WDTCSR = (1 << WDCE) | (1 << WDE);
   WDTCSR = (1 << WDIE) | (1 << WDE) | (1 << WDP3) | (1 << WDP0);
 
+  bootFlag = true;
   Serial.begin(115200);
 
   initInputOutput();
